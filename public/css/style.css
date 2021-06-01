@@ -1,0 +1,189 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  font-family: 'Nunito', sans-serif;
+  color: white; }
+
+body {
+  background-color: #aea291; }
+
+a {
+  text-decoration: none;
+  color: white; }
+
+.container {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto; }
+
+header {
+  top: 0;
+  position: sticky;
+  padding: 1em 0;
+  background-color: black;
+  text-align: center;
+  z-index: 100; }
+  header .logo h2 {
+    color: #feee17;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800; }
+
+nav {
+  top: calc(33px + 2em);
+  position: sticky;
+  padding: 0.5em 0;
+  background-color: rgba(77, 77, 77, 0.8);
+  width: 100%;
+  z-index: 100; }
+  nav ul {
+    width: 100%;
+    justify-content: space-between;
+    list-style: none;
+    display: flex;
+    flex-direction: row; }
+
+.a-active {
+  transition: .3s; }
+  .a-active:hover, .a-active:active {
+    color: #feee17; }
+
+.main {
+  min-height: 90vh;
+  text-align: center; }
+  .main h2 {
+    margin-top: 1em;
+    padding-bottom: 1em; }
+
+.user, .bitch {
+  padding: 2em;
+  border-radius: 10px;
+  background-color: #7d705c;
+  margin: 20vh auto 0;
+  max-width: 520px; }
+  .user-bio, .bitch-bio {
+    display: flex;
+    flex-direction: row; }
+    .user-bio-img, .bitch-bio-img {
+      max-width: 215px;
+      max-height: 215px;
+      width: 20vw;
+      height: 20vw;
+      border: 3px solid rgba(254, 242, 74, 0.5);
+      border-radius: 5px; }
+  .user-info, .bitch-info {
+    width: 100%; }
+    .user-info h2, .bitch-info h2 {
+      font-size: 2em;
+      margin: 0;
+      padding: 0; }
+    .user-info-security, .bitch-info-security {
+      display: flex;
+      align-items: center;
+      flex-direction: column; }
+      .user-info-security-sec, .bitch-info-security-sec {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: space-around; }
+      .user-info-security-bold, .bitch-info-security-bold {
+        font-weight: 600; }
+    .user-info-name, .bitch-info-name {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between; }
+
+.bitches-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center; }
+  .bitches-list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    position: relative;
+    padding-bottom: 2em; }
+    .bitches-list-item .bitch {
+      margin: 0; }
+      .bitches-list-item .bitch-info {
+        padding-left: 1em; }
+
+.counter {
+  padding-bottom: 2em; }
+
+.delete_this {
+  right: 0;
+  position: absolute;
+  background-color: #df2e58;
+  border-color: rgba(77, 164, 37, 0);
+  padding: 0.3em;
+  border-radius: 5px;
+  cursor: pointer; }
+
+.cute-form {
+  margin: 0 auto;
+  max-width: 520px; }
+  .cute-form label {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1em; }
+    .cute-form label p {
+      font-weight: 600;
+      font-size: 1.3rem; }
+    .cute-form label:last-of-type {
+      flex-direction: column; }
+      .cute-form label:last-of-type p {
+        font-size: 1.3rem; }
+
+.create-textarea {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 0.5rem;
+  border-radius: 5px;
+  resize: none;
+  width: 100%;
+  height: 50%;
+  font-size: 1.1rem; }
+
+.cute-input {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(77, 164, 37, 0);
+  padding: 0.5rem;
+  border-radius: 5px;
+  outline: none;
+  color: white;
+  font-size: 1.1rem;
+  width: 70%; }
+
+.cute-button {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(77, 164, 37, 0);
+  padding: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s; }
+  .cute-button:hover, .cute-button:active {
+    background-color: #e1d201;
+    margin-top: -3px; }
+
+.message, .error {
+  max-width: 512px;
+  margin: 1em auto 0;
+  background-color: #df2e58;
+  border-radius: 5px;
+  padding: 1em; }
+  .message ul, .error ul {
+    list-style: none; }
+
+footer {
+  width: 100%;
+  background-color: #2f2c00;
+  padding: 1em 0;
+  font-weight: 600;
+  text-align: center; }

@@ -1,0 +1,33 @@
+<h2>Главная</h2>
+<div class="bitches">
+<p class='counter'>Количество шлюх: {{count}}</p>
+{{#if bitches.length}}
+ <ul class='bitches-list'>
+  {{#each bitches}}
+    <li class='bitches-list-item' bdid='{{this._id}}'>
+      <div class="bitch">
+        <div class="bitch-bio">
+          <img src="{{this.photo}}" alt="" class='smart-img bitch-bio-img'>
+          <div class="bitch-info">
+            <div class="bitch-info-name">
+              <h2>{{this.name}}</h2> <h2>{{this.second_name}}</h2>
+            </div>
+            <div class="bitch-info-meta">
+              <h3>Дополнительная Информация:</h3>
+              {{#if this.meta}}
+              <p>{{this.meta}}</p>
+              {{else}}
+              <p>Отсутствует</p>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class='delete_this' name="button">X</button>
+     </li>
+  {{/each}}
+</ul>
+{{else}}
+  <h3>У тебя нет шлюх</h3>
+{{/if}}
+</div>

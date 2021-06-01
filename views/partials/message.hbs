@@ -1,0 +1,10 @@
+{{#if message.length}}
+<div class="{{classMessage}}">
+  <h2>Ошибкa:</h2>
+  <ul>
+  {{#each message}}
+  <li><p>{{this}}</p></li>
+  {{/each}}
+  </ul>
+</div>
+{{/if }}

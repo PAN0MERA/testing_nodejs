@@ -1,0 +1,26 @@
+{{#each user}}
+<div class="user">
+  <div class="user-bio">
+    <img src="{{this.photo}}" alt="" class='smart-img user-bio-img'>
+    <div class="user-info">
+      <h2>{{this.name}}</h2>
+      <div class="user-info-security">
+        <div class="user-info-security-sec">
+          <p class='user-info-security-bold'>Ваш логин: </p><p>{{this.login}}</p>
+        </div>
+        <div class="user-info-security-sec">
+          <p class='user-info-security-bold'>Ваш пароль: </p><p>{{this.password}}</p>
+        </div>
+      </div>
+      <div class="user-info-meta">
+        <h3>Дополнительная Информация:</h3>
+        {{#if this.meta}}
+        <p>{{this.meta}}</p>
+        {{else}}
+        <p>Отсутствует</p>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
