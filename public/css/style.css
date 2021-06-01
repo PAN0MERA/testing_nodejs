@@ -4,6 +4,9 @@
   outline: 0;
   font-family: 'Nunito', sans-serif;
   color: white; }
+  @media (max-width: 560px) {
+    * {
+      font-size: 12pt; } }
 
 body {
   background-color: #aea291; }
@@ -71,6 +74,14 @@ nav {
       height: 20vw;
       border: 3px solid rgba(254, 242, 74, 0.5);
       border-radius: 5px; }
+    @media (max-width: 560px) {
+      .user-bio, .bitch-bio {
+        flex-direction: column;
+        align-items: center; }
+        .user-bio-img, .bitch-bio-img {
+          width: 40vw;
+          height: 40vw;
+          margin-bottom: 1em; } }
   .user-info, .bitch-info {
     width: 100%; }
     .user-info h2, .bitch-info h2 {
@@ -93,6 +104,14 @@ nav {
       display: flex;
       flex-direction: row;
       justify-content: space-between; }
+    @media (max-width: 560px) {
+      .user-info h2, .bitch-info h2 {
+        font-size: 1.2em; }
+      .user-info-name, .bitch-info-name {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center; } }
 
 .bitches-list {
   list-style: none;
@@ -171,6 +190,24 @@ nav {
   .cute-button:hover, .cute-button:active {
     background-color: #e1d201;
     margin-top: -3px; }
+
+.form-hid {
+  display: none; }
+
+.switcher {
+  background-color: #2f2c00;
+  padding: 2% 3%;
+  margin: 2em 0;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s; }
+  .switcher:hover, .switcher:active {
+    background-color: #c8ba01; }
+  .switcher p {
+    font-size: 1.2em;
+    font-weight: 600; }
+  .switcher-active {
+    background-color: #c8ba01; }
 
 .message, .error {
   max-width: 512px;

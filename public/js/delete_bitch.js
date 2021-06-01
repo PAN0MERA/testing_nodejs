@@ -7,7 +7,7 @@ for(var i =0; i<delete_this.length; i++){
       bdid: bdid,
     };
 
-    var response =  fetch('/create', {
+    var response =  await fetch('/create', {
       method: "DELETE",
       headers:{
         'Content-Type': 'application/json;charset=utf-8',

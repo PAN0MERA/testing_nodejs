@@ -4,7 +4,8 @@ const User = require("../models/user.js");
 // валидатор
 const {body, validationResult} = require("express-validator");
 const fs = require("fs");
-
+const fetch = require("node-fetch");
+const config = require("../config.js");
 
 
 function errorPage(res, error, class_err){
@@ -71,42 +72,94 @@ exports.create_bitch = async function(req, res){
     console.log(err);
   });
 
-  let filedata = req.file;
-  // VALIDATION
-  await body('name').isLength({min:1}).trim().escape().run(req);
-  await body('second_name').isLength({min:1}).trim().escape().run(req);
-  const validRes = validationResult(req);
-  if(!filedata){
-    res.render("create.hbs",{
-      message: ['Ошибка при загрузке фото'],
-      classMessage: 'message',
-    });
-    return 0;
-  }
-  if(!validRes.isEmpty()){
-    res.render("create.hbs",{
-      message: ['Текстовые поля не могут быть пустыми'],
-      classMessage: 'message',
-    });
-    fs.unlink("./public/uploads/" + filedata.filename, err=>{
-      console.log(err);
-    });
-    return 0;
-  }
+  // объявление нужных полей
+  let name = '';
+  let second_name = '';
+  let photo = '';
+  let owner = req.session.user_id;
   let meta = '';
-  if(req.body.metaBitch){
-    await body('metaBitch').trim().escape().run(req);
-    meta = req.body.metaBitch;
-  }
 
-  // VALIDATION END
+  // если добавлено вручную
+  if(req.body.switcher == 'default'){
+    let filedata = req.file;
+    // VALIDATION
+    await body('name').isLength({min:1}).trim().escape().run(req);
+    await body('second_name').isLength({min:1}).trim().escape().run(req);
+    const validRes = validationResult(req);
+    if(!filedata){
+      res.render("create.hbs",{
+        message: ['Ошибка при загрузке фото'],
+        classMessage: 'message',
+      });
+      return 0;
+    }
+    if(!validRes.isEmpty()){
+      res.render("create.hbs",{
+        message: ['Текстовые поля не могут быть пустыми'],
+        classMessage: 'message',
+      });
+      fs.unlink("./public/uploads/" + filedata.filename, err=>{
+        console.log(err);
+      });
+      return 0;
+    }
+    if(req.body.metaBitch){
+      await body('metaBitch').trim().escape().run(req);
+      meta = req.body.metaBitch;
+    }
+    let name = req.body.name;
+    let second_name = req.body.second_name;
+    let photo = 'uploads/' + filedata.filename;
+    // VALIDATION END
+
+  }
+  // если добавлено через вк
+  else if (req.body.switcher == 'vk') {
+
+    // VALIDATION
+    await body("urlvk").isLength({min:1}).trim().escape().run(req);
+    const validRes = validationResult(req);
+    if(!validRes.isEmpty){
+      res.render("create.hbs",{
+        message: ['Текстовые поля не могут быть пустыми'],
+        classMessage: 'message',
+      });
+    }
+    // если не налось вк в ссылке
+    let urlvkindex = req.body.urlvk.indexOf('vk.com&#x2F;');
+    if(urlvkindex < 0){
+      res.render("create.hbs",{
+        message: ['Проверьте правильность введённой ссылки'],
+        classMessage: 'message',
+      });
+    }
+
+    // VALIDATION END
+    const urlvk = req.body.urlvk.slice(urlvkindex+12);
+    await fetch(`https://api.vk.com/method/users.get?user_ids=${urlvk}&fields=bdate,photo_200&access_token=${config.access_token}&v=5.131`)
+    .then(async docs=>{
+      let {response} = await docs.json();
+      let ans = response[0];
+      name = ans.first_name;
+      second_name = ans.last_name;
+      photo = ans.photo_200;
+      meta = 'vk.com/' + urlvk;
+    })
+    .catch(err=>{
+      console.log(err);
+      res.render("create.hbs",{
+        message: ['Проверьте правильность введённой ссылки'],
+        classMessage: 'message',
+      });
+    })
+  }
 
 
   const bitch = new Bitch({
-    name: req.body.name,
-    second_name: req.body.second_name,
-    owner: req.session.user_id,
-    photo: 'uploads/' + filedata.filename,
+    name: name,
+    second_name: second_name,
+    owner: owner,
+    photo: photo,
     meta: meta,
   });
   await bitch.save()
