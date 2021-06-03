@@ -132,11 +132,12 @@ exports.create_bitch = async function(req, res){
         message: ['Проверьте правильность введённой ссылки'],
         classMessage: 'message',
       });
+      return 0;
     }
 
     // VALIDATION END
     const urlvk = req.body.urlvk.slice(urlvkindex+12);
-    await fetch(`https://api.vk.com/method/users.get?user_ids=${urlvk}&fields=bdate,photo_200&access_token=${config.access_token}&v=5.131`)
+    await fetch(`https://api.vk.com/method/users.get?user_ids=${urlvk}&fields=bdate,photo_200&access_token=${config.access_token}&v=5.131&lang=ru`)
     .then(async docs=>{
       let {response} = await docs.json();
       let ans = response[0];
@@ -151,6 +152,7 @@ exports.create_bitch = async function(req, res){
         message: ['Проверьте правильность введённой ссылки'],
         classMessage: 'message',
       });
+      return 0;
     })
   }
 
@@ -221,14 +223,14 @@ exports.create_user = async function(req, res){
   if(!validRes.isEmpty()){
     res.render("registration.hbs",{
       message: ['Текстовые поля не могут быть пустыми'],
-      classMessage: 'massege',
+      classMessage: 'message',
     })
     return 0;
   }
   if(req.body.password != req.body.configPassword){
     res.render("registration.hbs",{
       message: ['Пароли не совпадают'],
-      classMessage: 'massege',
+      classMessage: 'message',
     })
     return 0;
   }
@@ -272,7 +274,7 @@ exports.login_post = async function(req,res){
   if(!validRes.isEmpty()){
     res.render("login.hbs",{
       message: ['Текстовые поля не могут быть пустыми'],
-      classMessage: 'massege',
+      classMessage: 'message',
     })
     return 0;
   }
@@ -282,7 +284,7 @@ exports.login_post = async function(req,res){
   if(!user){
     res.render("login.hbs",{
       message: ['Неправильный логин'],
-      classMessage: 'massege',
+      classMessage: 'message',
     })
   }
   // VALIDATION END
@@ -300,7 +302,7 @@ exports.login_post = async function(req,res){
   else{
     res.render("login.hbs",{
       message: ['Неправильный пароль'],
-      classMessage: 'massege',
+      classMessage: 'message',
     })
   }
 }
