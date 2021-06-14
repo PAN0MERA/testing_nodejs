@@ -12,7 +12,7 @@ const session    = require("express-session");
 // хранилище сессий
 const mongoSrote = require("connect-mongo");
 
-const config = require("./CONFIG.js")
+const config = require("./config.js")
 
 // локальное хранилище
 const LocalStorage = require('node-localstorage').LocalStorage;
@@ -27,7 +27,7 @@ const app = express();
 // регистрация хелпера
 hbs.registerHelper("getNav", function(){
   let nav = '';
-  if(localStorage.getItem("userLogin")){
+  if(localStorage.getItem("userLogin") == 1){
     nav += '<li><a href="/" class="a-active">Мои бич</a></li>';
     nav += '<li><a href="/create"class="a-active">Добавить новую</a></li>';
     nav += '<li><a href="/account"class="a-active">Мой аккаунт</a></li>';
@@ -39,6 +39,16 @@ hbs.registerHelper("getNav", function(){
   }
   return nav;
 });
+
+hbs.registerHelper("getErrorLogin", function(){
+  if(localStorage.getItem("userLogin") != 1){
+    return    `<a href='/login' class='a-active'>Авторизоваться</a>
+              <a href="/register" class='a-active'>Зарегестрироваться</a>`;
+  }
+  else{
+    return `<a href="/" class='a-active'>На главную</a>`;
+  }
+})
 
 // шаблонизатор
 app.engine("hbs", exphbs({

@@ -1,0 +1,25 @@
+<h2>Редактировать</h2>
+
+<div>
+  <form class="cute-form" action="/change_bitch" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="bdid" value="{{obj._id}}">
+    <label for="">
+      <p>Имя</p>
+      <input type="text" name="name" value="{{obj.name}}" placeholder="Имя" class="cute-input">
+    </label>
+    <label for="">
+      <p>Фамилия:</p>
+      <input type="text" name="second_name" value="{{obj.second_name}}" placeholder="Фамилия"class="cute-input">
+    </label>
+    <label for="">
+      <p>Фотография:</p>
+      <input type="file" name="avatar" value="">
+      <input type="hidden" name="avatar_save" value="{{obj.photo}}">
+    </label>
+    <label for="">
+      <p>Дополнительная информация:</p>
+      <textarea name="metaBitch" rows="8" cols="80" class="create-textarea">{{obj.meta}}</textarea>
+    </label>
+    <input type="submit" name="" value="Сохранить" class='cute-button'>
+  </form>
+</div>

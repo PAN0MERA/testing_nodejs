@@ -124,6 +124,7 @@ exports.create_bitch = async function(req, res){
         message: ['Текстовые поля не могут быть пустыми'],
         classMessage: 'message',
       });
+      return 0;
     }
     // если не налось вк в ссылке
     let urlvkindex = req.body.urlvk.indexOf('vk.com&#x2F;');
@@ -193,6 +194,160 @@ exports.delete_bitch = async function(req, res){
   .catch(err=>{
     console.log(err);
   });
+}
+
+exports.change_bitch = async function(req, res){
+  if(req.query.token == 1){
+    bitch = await Bitch.findById(req.query.bdid)
+    .lean()
+    .then(docs=>{
+      if(docs.owner == req.session.user_id){
+        res.render('change_bitch.hbs',{
+          obj: docs,
+        });
+      }
+      else{
+        res.redirect('/');
+      }
+      return 0;
+    });
+  }
+  else{
+    res.redirect('/');
+  }
+}
+
+exports.change_bitch_save = async function(req,res){
+  // объявление нужных полей
+  let name = req.body.name;
+  let second_name = req.body.second_name;
+  let owner = req.session.user_id;
+  let meta = req.body.meta;
+  let photo = req.body.avatar_save
+
+
+    let filedata = req.file;
+    // VALIDATION
+    await body('name').isLength({min:1}).trim().escape().run(req);
+    await body('second_name').isLength({min:1}).trim().escape().run(req);
+    const validRes = validationResult(req);
+    if(filedata){
+      fs.unlink("./public/" + photo, err=>{
+        console.log(err);
+      });
+      photo = 'uploads/' + filedata.filename;
+    }
+    if(!validRes.isEmpty()){
+      if(filedata){
+        fs.unlink("./public/uploads/" + filedata.filename, err=>{
+          console.log(err);
+        });
+      }
+      let bitch = await Bitch.findById(req.body.bdid)
+      .lean()
+      .then(docs=>{
+        console.log(req.body.metaBitch);
+        console.log(docs);
+        res.render('change_bitch.hbs',{
+          message: ['Текстовые поля не могут быть пустыми'],
+          classMessage: 'message',
+          obj: docs,
+        });
+      });
+      console.log(validRes);
+      return 0;
+    }
+    console.log(photo);
+    if(req.body.metaBitch){
+      await body('metaBitch').trim().escape().run(req);
+      meta = req.body.metaBitch;
+    }
+    name = req.body.name;
+    second_name = req.body.second_name;
+    // VALIDATION END
+    await Bitch.updateOne({_id: req.body.bdid, owner: req.session.user_id}, {name: name, second_name:second_name, meta:meta, photo:photo})
+    .then(()=>{
+      res.redirect('/');
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+}
+
+exports.change_user = function(req,res){
+  let user = User.findById(req.session.user_id)
+  .lean()
+  .then(docs=>{
+    res.render("change_user.hbs",{
+      obj: docs,
+    });
+  });
+}
+
+exports.change_user_save = async function(req,res){
+  // объявление нужных полей
+  let name = req.body.name;
+  let meta = req.body.metaUser;
+  let password = req.body.password;
+  let cpassword = req.body.configPassword;
+  let photo = req.body.avatar_save;
+
+
+    let filedata = req.file;
+    // VALIDATION
+    await body('name').isLength({min:1}).trim().escape().run(req);
+    await body('password').isLength({min:1}).trim().escape().run(req);
+    await body('configPassword').isLength({min:1}).trim().escape().run(req);
+    const validRes = validationResult(req);
+    if(filedata){
+      fs.unlink("./public/" + photo, err=>{
+        console.log(err);
+      });
+      photo = 'uploads/' + filedata.filename;
+    }
+    if(!validRes.isEmpty()){
+      if(filedata){
+        fs.unlink("./public/uploads/" + filedata.filename, err=>{
+          console.log(err);
+        });
+      }
+      let bitch = await User.findById(req.session.user_id)
+      .lean()
+      .then(docs=>{
+        res.render('change_user.hbs',{
+          message: ['Текстовые поля не могут быть пустыми'],
+          classMessage: 'message',
+          obj: docs,
+        });
+      });
+      console.log(validRes);
+      return 0;
+    }
+    if(req.body.metaUser){
+      await body('metaUser').trim().escape().run(req);
+      meta = req.body.metaUser;
+    }
+    if(password !=cpassword){
+      let bitch = await User.findById(req.session.user_id)
+      .lean()
+      .then(docs=>{
+        res.render('change_user.hbs',{
+          message: ['Пароли не совпадают'],
+          classMessage: 'message',
+          obj: docs,
+        });
+      });
+      return 0;
+    }
+    name = req.body.name;
+    // VALIDATION END
+    await User.updateOne({_id: req.session.user_id}, {name: name, meta:meta, photo:photo, password:password})
+    .then(()=>{
+      res.redirect('/account');
+    })
+    .catch(err=>{
+      console.log(err);
+    })
 }
 
 exports.create_user = async function(req, res){

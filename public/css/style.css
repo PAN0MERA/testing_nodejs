@@ -20,6 +20,21 @@ a {
   width: 90%;
   margin: 0 auto; }
 
+/***
+ICON SVG
+***/
+.svg-icon-pen {
+  background-image: url("../img/pen.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  min-width: 1rem;
+  min-height: 1.2rem;
+  color: white; }
+
+/***
+END ICON SVG
+***/
 header {
   top: 0;
   position: sticky;
@@ -102,7 +117,7 @@ nav {
         font-weight: 600; }
     .user-info-name, .bitch-info-name {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: space-between; }
     @media (max-width: 560px) {
       .user-info h2, .bitch-info h2 {
@@ -136,6 +151,15 @@ nav {
 
 .delete_this {
   right: 0;
+  position: absolute;
+  background-color: #df2e58;
+  border-color: rgba(77, 164, 37, 0);
+  padding: 0.3em;
+  border-radius: 5px;
+  cursor: pointer; }
+
+.change_this {
+  right: 2em;
   position: absolute;
   background-color: #df2e58;
   border-color: rgba(77, 164, 37, 0);
@@ -217,6 +241,9 @@ nav {
   padding: 1em; }
   .message ul, .error ul {
     list-style: none; }
+
+.necessarily {
+  color: #df2e58; }
 
 footer {
   width: 100%;

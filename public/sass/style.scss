@@ -27,6 +27,25 @@ a{
   margin: 0 auto;
 }
 
+/***
+ICON SVG
+***/
+.svg-icon{
+  &-pen{
+    background-image: url("../img/pen.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    min-width: 1rem;
+    min-height: 1.2rem;
+    color:white;
+  }
+}
+
+/***
+END ICON SVG
+***/
+
 header{
   top:0;
   position: sticky;
@@ -125,7 +144,7 @@ nav{
     }
     &-name{
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: space-between;
     }
     @media(max-width: 560px){
@@ -170,6 +189,15 @@ nav{
 }
 .delete_this{
   right: 0;
+  position: absolute;
+  background-color: rgb(223, 46, 88);
+  border-color: rgba(77, 164, 37, 0);
+  padding: 0.3em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.change_this{
+  right: 2em;
   position: absolute;
   background-color: rgb(223, 46, 88);
   border-color: rgba(77, 164, 37, 0);
@@ -265,6 +293,10 @@ nav{
   ul{
     list-style: none;
   }
+}
+
+.necessarily{
+  color: rgb(223, 46, 88);
 }
 
 footer{

@@ -1,9 +1,4 @@
 <div class="{{classErr}}">
 <h2>{{error}}</h2>
-{{#if login}}
-  <a href="/" class='a-active'>На главную</a>
-{{else}}
-  <a href="/login" class='a-active'>Авторизоваться</a>
-  <a href="/register" class='a-active'>Зарегестрироваться</a>
-{{/if}}
+  {{{getErrorLogin}}}
 </div>
